@@ -1,0 +1,15 @@
+{
+    "remotes": [
+        {
+            "user": null,
+            "password": null,
+            "url": "",
+            "repos": []
+        }
+    ],
+    "local": {
+        "user": null,
+        "password": null,
+        "url": ""
+    }
+}
