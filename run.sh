@@ -35,20 +35,34 @@ for ((i=0; i<$num; i++)); do
     repos=`python3 -c "import json; print(len(json.loads('''$data''')))"`
     for ((j=0; j<repos; j++)); do
         repo=`jq -r .remotes[$i].repos[$j] config.json`
-        echo "-> mirror $repo"
+        echo "-> mirror $url/$repo"
         echo "  -> pull"
-        docker pull "$url"/"$repo"
+        docker pull "$url/$repo" | tee tmp
         echo
-        echo "  -> push"
-        docker tag "$url"/"$repo" "$l_url"/"$repo"
-        docker push "$l_url"/"$repo"
+        if [[ `tail -2 tmp | grep "Image is up to date"` != "" ]]; then
+            echo "  -> up to date"
+            echo
+        else
+            echo $(date)                >> update_log
+            echo "-> mirror $url/$repo" >> update_log
+            echo "  -> pull"            >> update_log
+            cat  tmp                    >> update_log
+            if [[ `echo $repo | grep ":latest"` != "" ]]; then
+                echo "  -> remove old ones"                                  | tee -a update_log
+                docker rmi $(docker images | grep "none" | awk '{print $3}') | tee -a update_log
+                echo
+            fi
+            echo "  -> push"                                                 | tee -a update_log
+            docker tag "$url/$repo" "$l_url/$repo"                           | tee -a update_log
+            docker push "$l_url/$repo"                                       | tee -a update_log
+            echo                                                             | tee -a update_log
+        fi
         echo
-        # echo "  -> remove local image"
-        # docker image rm "$url"/"$repo" "$l_url"/"$repo"
-        # echo
+        echo
     done
 
     logout "$url" "$user"
 done
 
+rm tmp
 logout "$l_url" "$l_user"
