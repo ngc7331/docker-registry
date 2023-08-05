@@ -10,5 +10,7 @@ s6-setuidgid abc \
                 --dest-tls-verify=false \
                 --preserve-digests \
                 --keep-going \
+                --scoped \
             ${SKOPEO_CONFIG_PATH}/config.yml \
-            localhost:5000
+            localhost:5000 \
+    | tee /tmp/skopeo-sync.log
