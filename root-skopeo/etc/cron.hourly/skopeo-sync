@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+export HOME=${SKOPEO_DATA_PATH}
+
+s6-setuidgid abc \
+    skopeo sync --registries.d ${SKOPEO_DATA_PATH}/registries.d \
+                --src yaml \
+                --dest docker \
+                --dest-creds ${AUTH_USER}:${AUTH_PASS} \
+                --dest-tls-verify=false \
+            ${SKOPEO_CONFIG_PATH}/config.yml \
+            localhost:5000

@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+if [[ ! -f ${SKOPEO_CONFIG_PATH}/config.yml ]]; then
+    cp /etc/skopeo/config.yml.template ${SKOPEO_CONFIG_PATH}/config.yml
+fi
+
+chown -R abc:abc ${SKOPEO_CONFIG_PATH} ${SKOPEO_DATA_PATH}
