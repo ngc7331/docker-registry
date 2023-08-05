@@ -1,0 +1,3 @@
+[submodule "skopeo"]
+	path = skopeo
+	url = ssh://github.com/containers/skopeo
