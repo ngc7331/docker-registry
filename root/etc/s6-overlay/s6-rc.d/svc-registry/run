@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bash
+
+s6-setuidgid abc \
+    registry serve ${REG_CONFIG_PATH}/config.yml

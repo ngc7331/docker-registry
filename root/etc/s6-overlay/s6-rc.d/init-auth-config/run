@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+
+htpasswd -Bbn ${AUTH_USER} ${AUTH_PASS} > ${AUTH_CONFIG_PATH}/htpasswd
