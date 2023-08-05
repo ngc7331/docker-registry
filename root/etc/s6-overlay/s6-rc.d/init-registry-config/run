@@ -2,10 +2,11 @@
 
 if [[ ! -f ${REG_CONFIG_PATH}/config.yml ]]; then
     cp /etc/docker/registry/config.yml.template ${REG_CONFIG_PATH}/config.yml
-    chown abc:abc ${REG_CONFIG_PATH}/config.yml
 fi
 
 # create symbol link (not actually used now)
 if [[ ! -f /etc/docker/registry/config.yml ]]; then
     ln -s ${REG_CONFIG_PATH}/config.yml /etc/docker/registry/config.yml
 fi
+
+chown -R abc:abc ${REG_CONFIG_PATH} ${REG_DATA_PATH}
