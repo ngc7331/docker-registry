@@ -6,7 +6,8 @@ ENV DATA_PATH=/data
 ENV REG_CONFIG_PATH="${CONFIG_PATH}/registry"
 ENV REG_DATA_PATH="${DATA_PATH}/registry"
 ENV AUTH_CONFIG_PATH="${CONFIG_PATH}/auth"
-RUN mkdir -p $REG_CONFIG_PATH $REG_DATA_PATH $AUTH_CONFIG_PATH
+RUN mkdir -p ${REG_CONFIG_PATH} ${REG_DATA_PATH} ${AUTH_CONFIG_PATH} && \
+    chown abc:abc ${REG_CONFIG_PATH} ${REG_DATA_PATH} ${AUTH_CONFIG_PATH}
 
 RUN apt update && \
     apt install -y cron apache2-utils
