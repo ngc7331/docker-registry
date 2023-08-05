@@ -8,5 +8,7 @@ s6-setuidgid abc \
                 --dest docker \
                 --dest-creds ${AUTH_USER}:${AUTH_PASS} \
                 --dest-tls-verify=false \
+                --preserve-digests \
+                --keep-going \
             ${SKOPEO_CONFIG_PATH}/config.yml \
             localhost:5000
