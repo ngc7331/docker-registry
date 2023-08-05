@@ -1,3 +1,4 @@
 #!/bin/bash -e
 
-registry garbage-collect -m ${REGISTRY_CONFIG_PATH}/config.yml
+s6-setuidgid abc \
+    registry garbage-collect -m ${REG_CONFIG_PATH}/config.yml
