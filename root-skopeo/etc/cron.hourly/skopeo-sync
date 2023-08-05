@@ -1,7 +1,9 @@
 #!/bin/bash -e
 
 export HOME=${SKOPEO_DATA_PATH}
+LOG=/tmp/skopeo-sync.log
 
+s6-setuidgid abc date > ${LOG}
 s6-setuidgid abc \
     skopeo sync --registries.d ${SKOPEO_DATA_PATH}/registries.d \
                 --src yaml \
@@ -13,4 +15,4 @@ s6-setuidgid abc \
                 --scoped \
             ${SKOPEO_CONFIG_PATH}/config.yml \
             localhost:5000 \
-    | tee /tmp/skopeo-sync.log
+    | tee -a ${LOG}
