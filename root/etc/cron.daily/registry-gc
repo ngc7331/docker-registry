@@ -8,4 +8,4 @@ LOG=/tmp/registry-gc.log
 s6-setuidgid abc date > ${LOG}
 s6-setuidgid abc \
     registry garbage-collect -m ${REG_CONFIG_PATH}/config.yml \
-    | tee -a ${LOG}
+    >> ${LOG} 2>&1

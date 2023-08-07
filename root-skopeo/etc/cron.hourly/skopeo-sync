@@ -18,4 +18,4 @@ s6-setuidgid abc \
                 --scoped \
             ${SKOPEO_CONFIG_PATH}/config.yml \
             localhost:5000 \
-    | tee -a ${LOG}
+    >> ${LOG} 2>&1
