@@ -3,6 +3,9 @@
 SKOPEO_CONFIG_PATH=
 SKOPEO_DATA_PATH=
 
+AUTH_USER=
+AUTH_PASS=
+
 export HOME=${SKOPEO_DATA_PATH}
 LOG=/tmp/skopeo-sync.log
 
