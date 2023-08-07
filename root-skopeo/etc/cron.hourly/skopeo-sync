@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+SKOPEO_CONFIG_PATH=
+SKOPEO_DATA_PATH=
+
 export HOME=${SKOPEO_DATA_PATH}
 LOG=/tmp/skopeo-sync.log
 

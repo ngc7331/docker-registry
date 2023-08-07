@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+REG_CONFIG_PATH=
+REG_DATA_PATH=
+
 LOG=/tmp/registry-gc.log
 
 s6-setuidgid abc date > ${LOG}
