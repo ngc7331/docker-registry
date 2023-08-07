@@ -7,5 +7,5 @@ fi
 
 lsiown -R abc:abc ${SKOPEO_CONFIG_PATH} ${SKOPEO_DATA_PATH}
 
-sed -i "s/SKOPEO_CONFIG_PATH=/SKOPEO_CONFIG_PATH=${SKOPEO_CONFIG_PATH}/" /etc/cron.hourly/skopeo-sync
-sed -i "s/SKOPEO_DATA_PATH=/SKOPEO_DATA_PATH=${SKOPEO_DATA_PATH}/" /etc/cron.hourly/skopeo-sync
+sed -i "s!SKOPEO_CONFIG_PATH=!SKOPEO_CONFIG_PATH=${SKOPEO_CONFIG_PATH}!" /etc/cron.hourly/skopeo-sync
+sed -i "s!SKOPEO_DATA_PATH=!SKOPEO_DATA_PATH=${SKOPEO_DATA_PATH}!" /etc/cron.hourly/skopeo-sync

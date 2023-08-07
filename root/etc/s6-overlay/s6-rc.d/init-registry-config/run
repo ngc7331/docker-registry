@@ -12,5 +12,5 @@ fi
 
 lsiown -R abc:abc ${REG_CONFIG_PATH} ${REG_DATA_PATH}
 
-sed -i "s/REG_CONFIG_PATH=/REG_CONFIG_PATH=${REG_CONFIG_PATH}/" /etc/cron.daily/registry-gc
-sed -i "s/REG_DATA_PATH=/REG_DATA_PATH=${REG_DATA_PATH}/" /etc/cron.daily/registry-gc
+sed -i "s!REG_CONFIG_PATH=!REG_CONFIG_PATH=${REG_CONFIG_PATH}!" /etc/cron.daily/registry-gc
+sed -i "s!REG_DATA_PATH=!REG_DATA_PATH=${REG_DATA_PATH}!" /etc/cron.daily/registry-gc
