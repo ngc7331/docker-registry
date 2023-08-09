@@ -1,11 +1,6 @@
 #!/bin/bash -e
 
-REG_CONFIG_PATH=
-REG_DATA_PATH=
-
 LOG=/tmp/registry-gc.log
 
-s6-setuidgid abc date > ${LOG}
-s6-setuidgid abc \
-    registry garbage-collect -m ${REG_CONFIG_PATH}/config.yml \
-    >> ${LOG} 2>&1
+s6-setuidgid abc echo $(date) === registry garbage-collect > ${LOG}
+/app/registry-gc >> ${LOG} 2>&1

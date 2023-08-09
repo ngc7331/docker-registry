@@ -42,3 +42,4 @@ COPY root/ /
 COPY root-skopeo/ /
 VOLUME [ "/config", "/data" ]
 EXPOSE 5000
+ENTRYPOINT [ "/entrypoints.sh" ]

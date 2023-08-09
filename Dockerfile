@@ -29,3 +29,4 @@ ENV UMASK=002
 COPY root/ /
 VOLUME [ "/config", "/data" ]
 EXPOSE 5000
+ENTRYPOINT [ "/entrypoints.sh" ]
