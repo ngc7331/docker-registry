@@ -20,5 +20,5 @@ case "$1" in
     skopeo)
         check_skopeo && skopeo "${@:2}" ;;
     *)
-        bash -c "$*" ;;
+        exec "$@" ;;
 esac
