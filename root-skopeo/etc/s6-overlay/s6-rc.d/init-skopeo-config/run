@@ -7,10 +7,4 @@ fi
 
 lsiown -R abc:abc ${SKOPEO_CONFIG_PATH} ${SKOPEO_DATA_PATH}
 
-sed -i "s!SKOPEO_CONFIG_PATH=.*!SKOPEO_CONFIG_PATH=${SKOPEO_CONFIG_PATH}!" /app/skopeo-sync
-sed -i "s!SKOPEO_DATA_PATH=.*!SKOPEO_DATA_PATH=${SKOPEO_DATA_PATH}!" /app/skopeo-sync
-
-sed -i "s/AUTH_USER=.*/AUTH_USER=${AUTH_USER}/" /app/skopeo-sync
-sed -i "s/AUTH_PASS=.*/AUTH_PASS=${AUTH_PASS}/" /app/skopeo-sync
-
 chmod 700 /app/skopeo-sync

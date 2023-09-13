@@ -1,10 +1,4 @@
-#!/bin/bash -e
-
-SKOPEO_CONFIG_PATH=
-SKOPEO_DATA_PATH=
-
-AUTH_USER=
-AUTH_PASS=
+#!/usr/bin/with-contenv bash -e
 
 export HOME=${SKOPEO_DATA_PATH}
 

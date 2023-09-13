@@ -1,7 +1,4 @@
-#!/bin/bash -e
-
-REG_CONFIG_PATH=
-REG_DATA_PATH=
+#!/usr/bin/with-contenv bash -e
 
 s6-setuidgid abc \
     registry garbage-collect -m \
