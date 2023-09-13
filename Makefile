@@ -6,6 +6,8 @@ DOCKER_IMAGE := registry
 REG_VERSION := 2.8.2
 SKOPEO_VERSION := $(shell sed -n -r 's/const Version = "(.*)"/\1/p' skopeo/version/version.go)
 
+all: update build build-skopeo push push-skopeo
+
 update:
 	NEW_VERSION=$(subst v,,$(shell curl -s https://api.github.com/repos/distribution/distribution/releases/latest | jq '.name')) && \
 	sed -i "s/^REG_VERSION := .*$$/REG_VERSION := $$NEW_VERSION/" Makefile && \
