@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash -e
+#!/usr/bin/with-contenv bash
 
 s6-setuidgid abc \
     registry garbage-collect -m \

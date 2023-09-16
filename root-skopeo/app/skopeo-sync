@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash -e
+#!/usr/bin/with-contenv bash
 
 export HOME=${SKOPEO_DATA_PATH}
 
