@@ -1,0 +1,20 @@
+name: build
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build_all:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      - run: sudo apt update && sudo apt install jq curl make
+      - env:
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        run: |
+            echo $DOCKERHUB_PASS | docker login --username $DOCKERHUB_USER --password-stdin && \
+            make all
