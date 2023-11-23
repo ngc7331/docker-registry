@@ -3,7 +3,7 @@ default: build
 DOCKER_USER := ngc7331
 DOCKER_IMAGE := registry
 
-REG_VERSION := 2.8.2
+REG_VERSION := 2.8.3
 SKOPEO_VERSION := $(shell sed -n -r 's/const Version = "(.*)"/\1/p' skopeo/version/version.go)
 
 all: build build-skopeo push push-skopeo
