@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bash
 
+mkdir -p ${SKOPEO_CONFIG_PATH} ${SKOPEO_DATA_PATH}
+
 if [[ ! -f ${SKOPEO_CONFIG_PATH}/config.yml ]]; then
     echo "${SKOPEO_CONFIG_PATH}/config.yml" not exist, creat with template
     cp /etc/skopeo/config.yml.template ${SKOPEO_CONFIG_PATH}/config.yml || echo FAIL

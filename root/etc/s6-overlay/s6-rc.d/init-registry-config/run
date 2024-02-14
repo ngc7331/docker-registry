@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bash
 
+mkdir -p ${REG_CONFIG_PATH} ${REG_DATA_PATH}
+
 if [[ ! -f ${REG_CONFIG_PATH}/config.yml ]]; then
     echo "${REG_CONFIG_PATH}/config.yml" not exist, creat with template
     cp /etc/docker/registry/config.yml.template ${REG_CONFIG_PATH}/config.yml || echo FAIL
