@@ -1,4 +1,4 @@
-name: build
+name: build-skopeo
 on:
   push:
   workflow_dispatch:
@@ -20,4 +20,4 @@ jobs:
         run: |
             echo $DOCKERHUB_PASS | docker login --username $DOCKERHUB_USER --password-stdin && \
             docker buildx create --name mybuilder --bootstrap --use && \
-            make build
+            make build-skopeo

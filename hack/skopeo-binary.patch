@@ -1,0 +1,25 @@
+From 6d52c5314642755508dad254d1402e6e3f7c9b8e Mon Sep 17 00:00:00 2001
+From: ngc7331 <ngc7331@outlook.com>
+Date: Wed, 14 Feb 2024 22:53:25 +0800
+Subject: [PATCH] chore: add binary.% target
+
+---
+ Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index a6247aa5..ffc0a187 100644
+--- a/Makefile
++++ b/Makefile
+@@ -128,6 +128,8 @@ help:
+ # Do the build and the output (skopeo) should appear in current dir
+ binary: cmd/skopeo
+ 	$(CONTAINER_RUN) make bin/skopeo $(if $(DEBUG),DEBUG=$(DEBUG)) BUILDTAGS='$(BUILDTAGS)'
++binary.%: cmd/skopeo
++	$(CONTAINER_RUN) make bin/skopeo.$(word 2,$(subst ., ,$@)).$(word 3,$(subst ., ,$@)) $(if $(DEBUG),DEBUG=$(DEBUG)) BUILDTAGS='$(BUILDTAGS)'
+ 
+ # Build w/o using containers
+ .PHONY: bin/skopeo
+-- 
+2.34.1
+
