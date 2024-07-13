@@ -27,6 +27,7 @@ build:
 
 
 BINARIES = $(addprefix skopeo/bin/skopeo.,$(subst /,.,$(PLATFORMS)))
+binaries: $(BINARIES)
 build-skopeo: $(BINARIES)
 	docker buildx build \
 		--build-arg REG_VERSION=$(REG_VERSION) \
@@ -38,6 +39,8 @@ build-skopeo: $(BINARIES)
 
 skopeo/bin/skopeo.%: skopeo/version/version.go
 	cd skopeo && \
+	git config --local user.email "bot@example.com" && \
+	git config --local user.name "bot" && \
 	git am ../hack/skopeo-binary.patch || { echo "patch failed" && git am --abort; } && \
 	$(MAKE) binary.$(word 2,$(subst ., ,$@)).$(word 3,$(subst ., ,$@)) || echo "build failed" && \
 	git reset --hard HEAD^
