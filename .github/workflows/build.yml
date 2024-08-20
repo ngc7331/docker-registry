@@ -10,10 +10,8 @@ jobs:
         include:
           - dockerfile-suffix: ""
             tag-suffix: ""
-            extra: "echo \"No extra step needed\""
           - dockerfile-suffix: ".skopeo"
             tag-suffix: "-skopeo"
-            extra: "sudo apt update && sudo apt install jq curl make && make binaries && echo \"Extra step done\""
 
     runs-on: ubuntu-latest
     permissions:
@@ -27,7 +25,7 @@ jobs:
 
       - name: Get version
         run: |
-          export SKOPEO_VERSION=$(sed -n -r 's/const Version = "(.*)"/\1/p' skopeo/version/version.go)
+          export SKOPEO_VERSION=$(curl -s https://git.alpinelinux.org/aports/plain/community/skopeo/APKBUILD?h=3.20-stable | sed -n 's/pkgver=\([0-9.]*\)/\1/p')
           export REGISTRY_VERSION=$(sed -n -r 's/REG_VERSION \?= (.*)/\1/p' Makefile)
           echo "SKOPEO_VERSION=${SKOPEO_VERSION}" >> $GITHUB_ENV
           echo "REGISTRY_VERSION=${REGISTRY_VERSION}" >> $GITHUB_ENV
@@ -55,9 +53,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run extra step
-        run: ${{ matrix.extra }}
 
       - name: Build and push
         uses: docker/build-push-action@v5

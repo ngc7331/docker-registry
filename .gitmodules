@@ -1,3 +1,0 @@
-[submodule "skopeo"]
-	path = skopeo
-	url = git@github.com:containers/skopeo.git

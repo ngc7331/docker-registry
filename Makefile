@@ -8,7 +8,7 @@ SPACE := $(EMPTY) $(EMPTY)
 PLATFORMS_COMMA := $(subst $(SPACE),$(COMMA),$(PLATFORMS))
 
 REG_VERSION ?= 2.8.3
-SKOPEO_VERSION ?= $(shell sed -n -r 's/const Version = "(.*)"/\1/p' skopeo/version/version.go)
+SKOPEO_VERSION ?= $(shell curl -s https://git.alpinelinux.org/aports/plain/community/skopeo/APKBUILD?h=3.20-stable | sed -n 's/pkgver=\([0-9.]*\)/\1/p')
 
 all: build build-skopeo
 
@@ -25,22 +25,11 @@ build:
 		-t $(DOCKER_USER)/$(DOCKER_REPO)$(TARGET):$(REG_VERSION) \
 		--push .
 
-
-BINARIES = $(addprefix skopeo/bin/skopeo.,$(subst /,.,$(PLATFORMS)))
-binaries: $(BINARIES)
-build-skopeo: $(BINARIES)
+build-skopeo:
 	docker buildx build \
 		--build-arg REG_VERSION=$(REG_VERSION) \
 		--platform $(PLATFORMS_COMMA) \
 		-t $(DOCKER_USER)/$(DOCKER_REPO)$(TARGET):latest-skopeo \
 		-t $(DOCKER_USER)/$(DOCKER_REPO)$(TARGET):$(REG_VERSION)-skopeo$(SKOPEO_VERSION) \
-		-f Dockerfile-skopeo \
+		-f Dockerfile.skopeo \
 		--push .
-
-skopeo/bin/skopeo.%: skopeo/version/version.go
-	cd skopeo && \
-	git config --local user.email "bot@example.com" && \
-	git config --local user.name "bot" && \
-	git am ../hack/skopeo-binary.patch || { echo "patch failed" && git am --abort; } && \
-	$(MAKE) binary.$(word 2,$(subst ., ,$@)).$(word 3,$(subst ., ,$@)) || echo "build failed" && \
-	git reset --hard HEAD^
