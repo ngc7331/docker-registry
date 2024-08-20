@@ -2,6 +2,11 @@
 
 export HOME=${SKOPEO_DATA_PATH}
 
+EXTRA_ARGS=""
+if [ ${SKOPEO_MULTIARCH} = "true" ]; then
+    EXTRA_ARGS+="--all"
+fi
+
 s6-setuidgid abc \
     skopeo sync --registries.d ${SKOPEO_DATA_PATH}/registries.d \
                 --src yaml \
@@ -11,5 +16,6 @@ s6-setuidgid abc \
                 --preserve-digests \
                 --keep-going \
                 --scoped \
+                ${EXTRA_ARGS} \
             ${SKOPEO_CONFIG_PATH}/config.yml \
             localhost:5000

@@ -47,6 +47,9 @@ ENV AUTH_CONFIG_PATH="${CONFIG_PATH}/auth"
 ENV AUTH_USER=admin
 ENV AUTH_PASS=changeme
 
+# skopeo config
+ENV SKOPEO_MULTIARCH=true
+
 ENV TZ="Asia/Shanghai"
 ENV PUID=1000
 ENV PGID=1000
