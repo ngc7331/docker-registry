@@ -8,7 +8,7 @@ RUN apk add --no-cache \
         apache2-utils
 
 # registry
-ARG REG_VERSION=2.8.3
+ARG REG_VERSION=3.0.0-beta.1
 ENV REG_CONFIG_PATH="${CONFIG_PATH}/registry"
 ENV REG_DATA_PATH="${DATA_PATH}/registry"
 RUN curl -Ljo registry.tar.gz "https://github.com/distribution/distribution/releases/download/v${REG_VERSION}/registry_${REG_VERSION}_linux_${TARGETARCH}.tar.gz" && \
@@ -20,6 +20,8 @@ RUN curl -Ljo registry.tar.gz "https://github.com/distribution/distribution/rele
 ENV AUTH_CONFIG_PATH="${CONFIG_PATH}/auth"
 ENV AUTH_USER=admin
 ENV AUTH_PASS=changeme
+# See https://github.com/distribution/distribution/issues/4270
+ENV OTEL_TRACES_EXPORTER=none
 
 ENV TZ="Asia/Shanghai"
 ENV PUID=1000

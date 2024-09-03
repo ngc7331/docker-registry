@@ -1,4 +1,4 @@
-name: build
+name: build-beta
 on:
   push:
   workflow_dispatch:
@@ -46,6 +46,8 @@ jobs:
           version: ${{ steps.version.outputs.REGISTRY_VERSION }}
           suffix: ${{ matrix.tag-suffix }}
           suffix_detailed: ${{ steps.version.outputs.TAG_SUFFIX }}
+          is_latest: false
+          is_nightly: true
           file: ./Dockerfile${{ matrix.dockerfile-suffix }}
           platforms: linux/amd64,linux/arm64
           build_args: |
