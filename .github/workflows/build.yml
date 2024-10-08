@@ -1,4 +1,4 @@
-name: build-skopeo
+name: build
 on:
   push:
   workflow_dispatch:
@@ -19,52 +19,35 @@ jobs:
       packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
       - name: Get version
+        id: version
         run: |
           export SKOPEO_VERSION=$(curl -s https://git.alpinelinux.org/aports/plain/community/skopeo/APKBUILD?h=3.20-stable | sed -n 's/pkgver=\([0-9.]*\)/\1/p')
           export REGISTRY_VERSION=$(sed -n -r 's/REG_VERSION \?= (.*)/\1/p' Makefile)
-          echo "SKOPEO_VERSION=${SKOPEO_VERSION}" >> $GITHUB_ENV
-          echo "REGISTRY_VERSION=${REGISTRY_VERSION}" >> $GITHUB_ENV
+          echo "SKOPEO_VERSION=${SKOPEO_VERSION}" >> $GITHUB_OUTPUT
+          echo "REGISTRY_VERSION=${REGISTRY_VERSION}" >> $GITHUB_OUTPUT
           if [ "${{ matrix.tag-suffix }}" = "-skopeo" ]; then
-            echo "TAG_SUFFIX=-skopeo${SKOPEO_VERSION}" >> $GITHUB_ENV
+            echo "TAG_SUFFIX=-skopeo${SKOPEO_VERSION}" >> $GITHUB_OUTPUT
           else
-            echo "TAG_SUFFIX=" >> $GITHUB_ENV
+            echo "TAG_SUFFIX=" >> $GITHUB_OUTPUT
           fi
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
+      - name: Build
+        uses: ngc7331/actions@docker-build
         with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PASS }}
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
+          name: registry
+          version: ${{ steps.version.outputs.REGISTRY_VERSION }}
+          suffix: ${{ matrix.tag-suffix }}
+          suffix_detailed: ${{ steps.version.outputs.TAG_SUFFIX }}
           file: ./Dockerfile${{ matrix.dockerfile-suffix }}
-          build-args: |
-            REG_VERSION=${{ env.REGISTRY_VERSION }}
-          context: .
           platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            ngc7331/registry:latest${{ matrix.tag-suffix }}
-            ngc7331/registry:${{ env.REGISTRY_VERSION }}${{ env.TAG_SUFFIX }}
-            ghcr.io/${{ github.repository }}:latest${{ matrix.tag-suffix }}
-            ghcr.io/${{ github.repository }}:${{ env.REGISTRY_VERSION }}${{ env.TAG_SUFFIX }}
+          build_args: |
+            REG_VERSION=${{ steps.version.outputs.REGISTRY_VERSION }}
+          DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+          DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
