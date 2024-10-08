@@ -31,7 +31,7 @@ ENV AUTH_USER=admin
 ENV AUTH_PASS=changeme
 
 # skopeo config
-ENV SKOPEO_MULTIARCH=false
+ENV SKOPEO_MULTIARCH=true
 
 ENV TZ="Asia/Shanghai"
 ENV PUID=1000
