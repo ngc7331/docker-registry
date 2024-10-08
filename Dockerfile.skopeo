@@ -33,7 +33,7 @@ ENV AUTH_PASS=changeme
 ENV OTEL_TRACES_EXPORTER=none
 
 # skopeo config
-ENV SKOPEO_MULTIARCH=false
+ENV SKOPEO_MULTIARCH=true
 
 ENV TZ="Asia/Shanghai"
 ENV PUID=1000
