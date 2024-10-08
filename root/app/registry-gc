@@ -1,5 +1,12 @@
 #!/usr/bin/with-contenv bash
 
+if [ ${SKOPEO_MULTIARCH} = "true" ]; then
+    echo "Skipping registry garbage collection as it is not supported with multi-arch images"
+    echo "See https://github.com/ngc7331/docker-registry/blob/master/README.md#known-issue"
+    echo "See also https://github.com/distribution/distribution/issues/3178"
+    exit 0
+fi
+
 s6-setuidgid abc \
     registry garbage-collect -m \
                             ${REG_CONFIG_PATH}/config.yml

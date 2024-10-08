@@ -61,3 +61,11 @@ See [official docs](https://docs.docker.com/registry/configuration/).
 Defines the images that will be synchronized.
 
 See [official docs](https://github.com/containers/skopeo/blob/main/docs/skopeo-sync.1.md#yaml-file-content-used-source-for---src-yaml).
+
+## Known issue
+### Registry v2 bug with multi-arch garbage-collection
+See https://github.com/distribution/distribution/issues/3178
+
+This bug is fixed in v3.0.0, but it's still in beta. You can use `ngc7331/registry:nightly[-skopeo]` (or explicitly `ngc7331/registry:3.0.0-beta.1[-skopeo1.15.1]`) as a workaround. `ngc7331/registry:latest[-skopeo]` will be updated to v3.0.0 once it's stable, and `ngc7331/registry:nightly[-skopeo]` will **no longer be updated** at that time.
+
+If you're still using `ngc7331/registry:latest[-skopeo]`, you can disable multi-arch support by setting `SKOPEO_MULTIARCH=false`, this is also the default behavior now. If `SKOPEO_MULTIARCH=true`, garbage-collection will be disabled automatically.
