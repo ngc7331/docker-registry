@@ -8,7 +8,7 @@ RUN apk add --no-cache \
         apache2-utils
 
 # registry
-ARG REG_VERSION=3.0.0-beta.1
+ARG REG_VERSION=3.0.0-rc.2
 ENV REG_CONFIG_PATH="${CONFIG_PATH}/registry"
 ENV REG_DATA_PATH="${DATA_PATH}/registry"
 RUN curl -Ljo registry.tar.gz "https://github.com/distribution/distribution/releases/download/v${REG_VERSION}/registry_${REG_VERSION}_linux_${TARGETARCH}.tar.gz" && \
