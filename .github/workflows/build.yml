@@ -47,7 +47,7 @@ jobs:
           suffix: ${{ matrix.tag-suffix }}
           suffix_detailed: ${{ steps.version.outputs.TAG_SUFFIX }}
           file: ./Dockerfile${{ matrix.dockerfile-suffix }}
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64,linux/arm64,linux/riscv64
           build_args: |
             REG_VERSION=${{ steps.version.outputs.REGISTRY_VERSION }}
             SKOPEO_VERSION=${{ steps.version.outputs.SKOPEO_VERSION }}
