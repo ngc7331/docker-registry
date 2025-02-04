@@ -27,7 +27,7 @@ jobs:
       - name: Get version
         id: version
         run: |
-          export SKOPEO_VERSION=$(curl -s https://git.alpinelinux.org/aports/plain/community/skopeo/APKBUILD?h=3.20-stable | sed -n 's/pkgver=\([0-9.]*\)/\1/p')
+          export SKOPEO_VERSION=$(curl -s https://git.alpinelinux.org/aports/plain/community/skopeo/APKBUILD?h=3.21-stable | sed -n 's/pkgver=\([0-9.]*\)/\1/p')
           export REGISTRY_VERSION=$(sed -n -r 's/REG_VERSION \?= (.*)/\1/p' Makefile)
           echo "SKOPEO_VERSION=${SKOPEO_VERSION}" >> $GITHUB_OUTPUT
           echo "REGISTRY_VERSION=${REGISTRY_VERSION}" >> $GITHUB_OUTPUT
