@@ -1,7 +1,7 @@
 DOCKER_USER ?= ngc7331
 DOCKER_REPO ?= registry
 
-PLATFORMS ?= linux/amd64 linux/arm64
+PLATFORMS ?= linux/amd64 linux/arm64 linux/riscv64
 COMMA := ,
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
