@@ -7,10 +7,10 @@ log:
   fields:
     service: registry
 storage:
-  cache:
-    blobdescriptor: inmemory
   filesystem:
     rootdirectory: /data/registry
+  delete:
+    enabled: true
 http:
   addr: :5000
   headers:
