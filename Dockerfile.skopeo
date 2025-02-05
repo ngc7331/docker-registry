@@ -17,10 +17,12 @@ RUN curl -Ljo registry.tar.gz "https://github.com/distribution/distribution/rele
     registry --version
 
 # skopeo
+ARG SKOPEO_VERSION=1.16.1
+ARG SKOPEO_REL=-r1
 ENV SKOPEO_CONFIG_PATH="${CONFIG_PATH}/skopeo"
 ENV SKOPEO_DATA_PATH="${DATA_PATH}/skopeo"
 RUN apk add --no-cache \
-        skopeo && \
+        skopeo="${SKOPEO_VERSION}${SKOPEO_REL}" && \
     skopeo --version
 
 # registry auth

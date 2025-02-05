@@ -27,9 +27,11 @@ jobs:
       - name: Get version
         id: version
         run: |
-          export SKOPEO_VERSION=$(curl -s https://git.alpinelinux.org/aports/plain/community/skopeo/APKBUILD?h=3.21-stable | sed -n 's/pkgver=\([0-9.]*\)/\1/p')
+          export SKOPEO_VERSION=$(sed -n -r 's/SKOPEO_VERSION \?= (.*)/\1/p' Makefile)
+          export SKOPEO_REL=$(sed -n -r 's/SKOPEO_REL \?= (.*)/\1/p' Makefile)
           export REGISTRY_VERSION=$(sed -n -r 's/REG_VERSION \?= (.*)/\1/p' Makefile)
           echo "SKOPEO_VERSION=${SKOPEO_VERSION}" >> $GITHUB_OUTPUT
+          echo "SKOPEO_REL=${SKOPEO_REL}" >> $GITHUB_OUTPUT
           echo "REGISTRY_VERSION=${REGISTRY_VERSION}" >> $GITHUB_OUTPUT
           if [ "${{ matrix.tag-suffix }}" = "-skopeo" ]; then
             echo "TAG_SUFFIX=-skopeo${SKOPEO_VERSION}" >> $GITHUB_OUTPUT
@@ -48,6 +50,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build_args: |
             REG_VERSION=${{ steps.version.outputs.REGISTRY_VERSION }}
+            SKOPEO_VERSION=${{ steps.version.outputs.SKOPEO_VERSION }}
+            SKOPEO_REL=${{ steps.version.outputs.SKOPEO_REL }}
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
