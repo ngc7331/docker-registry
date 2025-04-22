@@ -7,9 +7,9 @@ EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
 PLATFORMS_COMMA := $(subst $(SPACE),$(COMMA),$(PLATFORMS))
 
-REG_VERSION ?= 2.8.3
+REG_VERSION ?= 3.0.0
 SKOPEO_VERSION ?= 1.16.1
-SKOPEO_REL ?= -r1
+SKOPEO_REL ?= -r4
 
 all: build build-skopeo
 
